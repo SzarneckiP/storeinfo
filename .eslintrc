@@ -1,0 +1,12 @@
+{
+    "rules": {
+        "no-undef": [
+            "error",
+            {
+                "files": [
+                    "styles/global.css"
+                ]
+            }
+        ]
+    }
+}
