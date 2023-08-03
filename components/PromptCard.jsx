@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { useSession } from "next-auth/react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 import { Realized } from '../components'
 
@@ -12,7 +12,6 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
 
     const { data: session } = useSession()
     const pathName = usePathname()
-    const router = useRouter()
 
     const handleCopy = () => {
         setCopied(post.prompt)

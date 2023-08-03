@@ -72,7 +72,16 @@ const Feed = () => {
     useEffect(() => {
         setLoading(true)
         const fetchPosts = async () => {
-            const response = await fetch('/api/prompt')
+            const response = await fetch('/api/prompt', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                }
+            })
             const data = await response.json()
             setPosts(data)
         }
