@@ -97,7 +97,7 @@ const Nav = () => {
                                     type="button"
                                     onClick={() => {
                                         router.push('/'),
-                                            signOut({ redirect: false, callbackUrl: `${process.env.NEXTAUTH_URL}` })
+                                            signOut()
                                     }}
                                     className="outline_btn"
                                 >
