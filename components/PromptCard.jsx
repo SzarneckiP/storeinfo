@@ -4,11 +4,12 @@ import Image from "next/image"
 import { useSession } from "next-auth/react"
 import { usePathname } from "next/navigation"
 
-import { Realized } from '../components'
+import { Loader, Realized } from '../components'
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
     const [copied, setCopied] = useState('')
     const [realizedPost, setRealizedPost] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const { data: session } = useSession()
     const pathName = usePathname()
@@ -20,7 +21,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
     }
 
     const handleRealized = async (realized) => {
-
+        setLoading(true)
         const response = await fetch(`/api/realized`, {
             method: 'PATCH',
             headers: {
@@ -38,6 +39,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
 
         if (response.ok) {
             setRealizedPost(realized)
+            setLoading(false)
         }
     }
 
@@ -48,6 +50,14 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
             setRealizedPost(false)
         }
     }, [post.realized])
+
+    if (loading) {
+        return (
+            <div className="prompt_card flex items-center justify-center">
+                <Loader />
+            </div>
+        )
+    }
 
     return (
         <>{realizedPost ? (

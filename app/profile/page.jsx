@@ -33,8 +33,8 @@ const MyProfile = () => {
     }
 
     const handleDel = async (post) => {
-        const hasConfirmed = confirm("Are you sure you want to delete this prompt?")
-
+        const hasConfirmed = confirm("Czy chcesz usunąć ten wpis?")
+        setLoading(true)
         if (hasConfirmed) {
             try {
                 await fetch(`/api/prompt/${post._id.toString()}`, {
@@ -44,7 +44,7 @@ const MyProfile = () => {
                 const filteredPost = posts.filter((item) => item._id !== post._id)
 
                 setPosts(filteredPost)
-
+                setLoading(false)
             } catch (error) {
                 console.log(error)
             }

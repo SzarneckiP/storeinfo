@@ -32,14 +32,9 @@ const Nav = () => {
     }, [])
     useEffect(() => {
         if (!session) {
-            console.log('before: ', window.localStorage)
-            window.localStorage.clear()
-            console.log('after: ', window.localStorage)
-            console.log(window.caches)
-            window.caches.delete()
-            // location.reload()
+            router.push('/')
         }
-    }, [])
+    }, [session])
 
     return (
         <motion.nav
@@ -102,7 +97,7 @@ const Nav = () => {
                                     type="button"
                                     onClick={() => {
                                         router.push('/'),
-                                            signOut()
+                                            signOut({ redirect: false, callbackUrl: `${process.env.NEXTAUTH_URL}` })
                                     }}
                                     className="outline_btn"
                                 >

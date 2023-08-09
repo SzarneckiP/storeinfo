@@ -76,7 +76,7 @@ const EditPrompt = () => {
             {session?.user ? (
                 <div>
                     <Form
-                        type='Edit'
+                        type='Edytuj'
                         post={post}
                         setPost={setPost}
                         submitting={submitting}

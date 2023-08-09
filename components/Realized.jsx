@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 import { useState, useEffect } from 'react'
 
 const Realized = ({ handleRealized }) => {
@@ -19,9 +18,9 @@ const Realized = ({ handleRealized }) => {
             <button
                 className='text-gray-400 hover:text-red-600 transition'
                 type="button"
-                onClick={() => {
+                onClick={() =>
                     handleRealized(true)
-                }}
+                }
             >
                 {realized ? 'Zrealizowane' : 'Zrealizuj'}
             </button>
