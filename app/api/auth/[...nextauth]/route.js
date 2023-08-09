@@ -1,8 +1,10 @@
+'use server'
 import NextAuth from "next-auth";
 import GoogleProvider from 'next-auth/providers/google'
 
 import { connectToDB } from "../../../../utils/database";
 import User from "../../../../models/user";
+import { cookies } from "next/headers"
 
 const handler = NextAuth({
     providers: [
@@ -19,6 +21,10 @@ const handler = NextAuth({
             })
 
             session.user.id = sessionUser._id.toString()
+
+            if (!session) {
+                cookies().delete('__Host-next-auth.csrf-token')
+            }
 
             return session
         },

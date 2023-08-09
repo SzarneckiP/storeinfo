@@ -32,7 +32,12 @@ const Nav = () => {
     }, [])
     useEffect(() => {
         if (!session) {
-            localStorage.clear()
+            console.log('before: ', window.localStorage)
+            window.localStorage.clear()
+            console.log('after: ', window.localStorage)
+            console.log(window.caches)
+            window.caches.delete()
+            // location.reload()
         }
     }, [])
 
