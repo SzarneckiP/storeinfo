@@ -30,6 +30,11 @@ const Nav = () => {
             }
         })
     }, [])
+    useEffect(() => {
+        if (!session) {
+            localStorage.clear()
+        }
+    }, [])
 
     return (
         <motion.nav

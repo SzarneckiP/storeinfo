@@ -5,11 +5,13 @@ import { PromptCard, Loader, Input } from '../components'
 import { motion } from "framer-motion"
 
 const PromptCardList = ({ data, handleTagClick }) => {
+
     return (
         <>
             {!data.length ? (
                 <div className="flex flex-col items-center gap-3 md:gap-5">
                     <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
+                    <Loader />
                 </div>
             ) : (
                 <div className="my-16 flex flex-wrap gap-6 mb-96"
@@ -18,8 +20,14 @@ const PromptCardList = ({ data, handleTagClick }) => {
                         <motion.div
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                        >
-                            <PromptCard key={post._id} post={post} handleTagClick={handleTagClick} />
+                        >{
+                                post.length === 0 ? (
+                                    <Loader />
+                                )
+                                    : (
+                                        <PromptCard key={post._id} post={post} handleTagClick={handleTagClick} />
+                                    )
+                            }
                         </motion.div>
                     ))}
                 </div>
