@@ -11,7 +11,7 @@ const RootLayout = ({ children }) => {
     return (
         <html lang='en'>
             <head>
-                <link rel="shortcut icon" type='image/svg' href="assets/icons/warehouse.png" />
+                <link rel="shortcut icon" type='image/png' href="assets/icons/warehouse.png" />
             </head>
             <Provider>
                 <body>

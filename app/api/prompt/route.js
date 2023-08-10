@@ -12,10 +12,6 @@ export const GET = async (request) => {
             status: 200,
             headers: {
                 'Cache-Control': 'no-cache',
-                'Cache-Location': `${process.env.NEXTAUTH_URL}`,
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             }
         }), { status: 200 })
     } catch (error) {
