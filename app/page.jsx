@@ -18,6 +18,7 @@ const Home = () => {
                 <span className="blue_gradient text-center">Info</span>
             </h1>
             <div className='w-full'>
+
                 {session?.user.id ? (
                     <Feed />
                 ) : (

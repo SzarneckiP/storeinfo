@@ -31,10 +31,10 @@ const Nav = () => {
         })
     }, [])
     useEffect(() => {
-        if (!session) {
+        if (!session && !providers) {
             router.push('/')
         }
-    }, [session])
+    }, [session, providers])
 
     return (
         <motion.nav
@@ -86,33 +86,11 @@ const Nav = () => {
                 ) : (
                     <>
                         {session?.user ? (
-                            <div className="flex gap-3 md:gap-5">
-                                <Link
-                                    href={'/create-prompt'}
-                                    className="black_btn"
-                                >
-                                    Dodaj Wpis
-                                </Link>
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        router.push('/'),
-                                            signOut({ redirect: false, callbackUrl: `${process.env.NEXTAUTH_URL}` })
-                                    }}
-                                    className="outline_btn"
-                                >
-                                    Wyloguj Się
-                                </button>
-                                <Link href={'/profile'}>
-                                    <Image
-                                        src={session?.user.image}
-                                        width={37}
-                                        height={37}
-                                        className="rounded-full"
-                                        alt="user image"
-                                    />
-                                </Link>
-                            </div>
+                            <Loader
+                                width={37}
+                                height={37}
+                                margin={'mt-0'}
+                            />
                         ) : (
                             <>
                                 {providers ? (
@@ -180,10 +158,9 @@ const Nav = () => {
 
                                 <button
                                     type="button"
-                                    onClick={() => {
-                                        router.push('/'),
-                                            signOut()
-                                    }}
+                                    onClick={
+                                        signOut
+                                    }
                                     className="mt-5 w-full black_btn"
                                 >
                                     Wyloguj Się
