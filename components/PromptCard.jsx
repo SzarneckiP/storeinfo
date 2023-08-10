@@ -72,7 +72,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
     return (
         <>{realizedPost ? (
             <div
-                className={`prompt_card relative ${realizedPost && 'cursor-pointer'}`}
+                className={`prompt_card relative md:w-full ${realizedPost && 'cursor-pointer'}`}
                 onClick={() => { handleRealized(false), setRealizedPost(false) }}
             >
                 <p className={`${realizedPost ? 'absolute bottom-11 text-red-600 font-bold text-4xl z-10 cursor-pointer' : 'hidden'}`}>Zrealizowane</p>
