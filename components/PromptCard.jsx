@@ -13,6 +13,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
 
     const { data: session } = useSession()
     const pathName = usePathname()
+    const treeDays = 259200000
 
     const handleCopy = () => {
         setCopied(post.prompt)
@@ -46,6 +47,15 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
     useEffect(() => {
         if (post.realized) {
             setRealizedPost(true)
+            setTimeout(() => {
+                try {
+                    fetch(`/api/prompt/${post._id.toString()}`, {
+                        method: 'DELETE',
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            }, treeDays)
         } else {
             setRealizedPost(false)
         }

@@ -51,7 +51,6 @@ const MyProfile = () => {
         }
     }
 
-
     return (
         <div>
             {loading ? (
