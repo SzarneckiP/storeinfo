@@ -4,7 +4,7 @@ import { PromptCard, Loader, Input } from '../components'
 
 import { motion } from "framer-motion"
 
-const PromptCardList = ({ data, handleTagClick }) => {
+const PromptCardList = ({ data, handleTagClick, getPosts }) => {
 
     return (
         <>
@@ -81,14 +81,14 @@ const Feed = () => {
         setLoading(true)
         const fetchPosts = async () => {
             const response = await fetch('/api/prompt', {
-                // method: 'GET',
-                // headers: {
-                //     // 'Content-Type': 'application/json',
-                //     // 'Cache-Control': 'no-cache',
-                //     // // 'Access-Control-Allow-Origin': '*',
-                //     // // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                //     // // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-                // }
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    // 'Access-Control-Allow-Origin': '*',
+                    // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                }
             })
             const data = await response.json()
             setPosts(data)
@@ -97,6 +97,28 @@ const Feed = () => {
         fetchPosts()
         setLoading(false)
     }, [])
+
+    const getPosts = () => {
+        setLoading(true)
+        const fetchPosts = async () => {
+            const response = await fetch('/api/prompt', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    // 'Access-Control-Allow-Origin': '*',
+                    // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                }
+            })
+            const data = await response.json()
+            setPosts(data)
+        }
+
+        fetchPosts()
+        setLoading(false)
+    }
+
 
     if (loading) return (
         <motion.section
@@ -119,6 +141,7 @@ const Feed = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
         >
+            <button className="outline_btn" onClick={getPosts}>GETPOSTS</button>
             <Input
                 searchText={searchText}
                 handleSearchChange={handleSearchChange}
@@ -131,6 +154,7 @@ const Feed = () => {
                 />
             ) : (
                 <PromptCardList
+                    getPosts={getPosts}
                     data={posts}
                     handleTagClick={handleTagClick}
                 />
