@@ -59,7 +59,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
         } else {
             setRealizedPost(false)
         }
-    }, [post.realized])
+    }, [post])
 
     if (loading) {
         return (
