@@ -8,7 +8,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
     return (
         <>
-            {!data.length ? (
+            {!data?.length ? (
                 <div className="flex flex-col items-center gap-3 md:gap-5">
                     <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
                     <Loader />
@@ -81,14 +81,14 @@ const Feed = () => {
         setLoading(true)
         const fetchPosts = async () => {
             const response = await fetch('/api/prompt', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Cache-Control': 'no-cache',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-                }
+                // method: 'GET',
+                // headers: {
+                //     // 'Content-Type': 'application/json',
+                //     // 'Cache-Control': 'no-cache',
+                //     // // 'Access-Control-Allow-Origin': '*',
+                //     // // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                //     // // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                // }
             })
             const data = await response.json()
             setPosts(data)
