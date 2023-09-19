@@ -29,7 +29,8 @@ const LoginForm = () => {
                 ...data,
                 redirect: true,
             },
-                setError('')
+                setError(''),
+                router.push('/'),
             )
         } catch (error) {
             console.log('login error:', error)

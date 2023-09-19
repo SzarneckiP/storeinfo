@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { PromptCard, Loader, Input } from '../components'
 import { useSession } from "next-auth/react"
 import { motion } from "framer-motion"
+import axios from "axios"
 
 const PromptCardList = ({ data, handleTagClick }) => {
 
@@ -80,27 +81,45 @@ const Feed = () => {
         setLoading(false)
     };
 
+    // useEffect(() => {
+    //     setLoading(true)
+    //     const fetchPosts = async () => {
+    //         const response = await fetch('/api/prompt', {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Cache-Control': 'public, s-maxage=1',
+    //                 'CDN-Cache-Control': 'public, s-maxage=60',
+    //                 'Vercel-CDN-Cache-Control': 'public, s-maxage=3600'
+    //             },
+    //             next: { revalidate: 60 },
+    //         })
+    //         const data = await response.json()
+    //         setPosts(data)
+    //     }
+
+    //     fetchPosts()
+    //     setLoading(false)
+    // }, [])
+
+
     useEffect(() => {
-        setLoading(true)
-        const fetchPosts = async () => {
-            const response = await fetch('/api/prompt', {
-                method: 'GET',
-                headers: {
-                    'Cache-Control': 'public, s-maxage=1',
-                    'CDN-Cache-Control': 'public, s-maxage=60',
-                    'Vercel-CDN-Cache-Control': 'public, s-maxage=3600'
-                },
-                next: { revalidate: 60 },
+
+        axios.get('/api/prompt')
+            .then(function (response) {
+                setLoading(true)
+                const data = response.data
+                setPosts(data)
+                setLoading(false)
             })
-            const data = await response.json()
-            setPosts(data)
-        }
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+    }
 
-        fetchPosts()
-        setLoading(false)
-    }, [])
+        , [])
 
-    if (loading) return <Loader />
+    if (loading) return <div className=" flex justify-center items-center"><Loader /></div>
 
     return (
         <>
