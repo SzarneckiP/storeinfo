@@ -9,7 +9,6 @@ import { dateCreator } from '../../utils/dateCreator'
 const EditPrompt = () => {
     const searchParams = useSearchParams()
     const promptId = searchParams.get('id')
-    console.log(promptId)
 
     const { data: session } = useSession()
     const router = useRouter()
@@ -50,7 +49,11 @@ const EditPrompt = () => {
             const response = await fetch(`/api/prompt/${promptId}`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
                 },
                 body: JSON.stringify({
                     prompt: post.prompt,
