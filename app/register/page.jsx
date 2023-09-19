@@ -14,7 +14,8 @@ const Register = () => {
         const username = e.target[0].value
         const email = e.target[1].value
         const password = e.target[2].value
-        const image = 'https://th.bing.com/th/id/OIP.cuQ_MvYHHn6Lkk5san1c_wHaHO?pid=ImgDet&rs=1'
+        const image = 'https://source.unsplash.com/300x300/?warehouse'
+        // const image = 'https://th.bing.com/th/id/OIP.cuQ_MvYHHn6Lkk5san1c_wHaHO?pid=ImgDet&rs=1'
 
         try {
 
@@ -31,7 +32,7 @@ const Register = () => {
                 })
             })
 
-            res.status === 201 && router.push('/')
+            res.status === 201 || 200 && router.push('/success')
 
         } catch (err) {
             setErr(true)

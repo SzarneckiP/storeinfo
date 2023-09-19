@@ -1,11 +1,13 @@
 'use client'
-import { Feed } from '../components'
+import { Feed, Loader, LoginForm } from '../components'
 import { motion } from 'framer-motion'
 import { useSession } from "next-auth/react"
 
 const Home = () => {
 
-    const { data: session } = useSession()
+    const { data: session, status } = useSession()
+
+    if (status === 'loading') return <Loader />
 
     return (
         <motion.section
@@ -19,13 +21,11 @@ const Home = () => {
             </h1>
             <div className='w-full'>
 
-                {session?.user.id ? (
+                {session?.user ? (
                     <Feed />
                 ) : (
-                    <div className='flex items-center justify-center'>
-                        <h1 className='mt-14 text-4xl font-bold text-center desc'>
-                            Zaloguj się, aby zobaczyć wpisy...
-                        </h1>
+                    <div className='flex mt-14 flex-col items-center justify-center'>
+                        <LoginForm />
                     </div>
                 )}
             </div>

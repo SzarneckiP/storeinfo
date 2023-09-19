@@ -82,7 +82,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
                     <div className="flex justify-between items-start gap-5">
                         <div className="flex flex-1 gap-3 justify-start items-center cursor-pointer">
                             <Image
-                                src={post.creator.image}
+                                src={post.creator?.image}
                                 width={40}
                                 height={40}
                                 alt="userImage"
@@ -90,10 +90,10 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
                             />
                             <div className="flex flex-col">
                                 <h3 className="font-satoshi font-semibold text-gray-900">
-                                    {post.creator.username}
+                                    {post.creator?.username}
                                 </h3>
                                 <p className="font-inter text-sm text-gray-500">
-                                    {post.creator.email}
+                                    {post.creator?.email}
                                 </p>
                             </div>
                         </div>
@@ -135,7 +135,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
 
                 </div>
                 <div>
-                    {session?.user.id === post.creator._id && pathName === '/profile' && (
+                    {session?.user.id === post.creator?._id && pathName === '/profile' && (
                         <div className="flex gap-4 border-t border-gray-200 pt-3 justify-between">
                             <p className="font-inter text-sm green_gradient cursor-pointer"
                                 onClick={handleEdit}
@@ -158,7 +158,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
                 <div className="flex justify-between items-start gap-5">
                     <div className="flex flex-1 gap-3 justify-start items-center cursor-pointer">
                         <Image
-                            src={post.creator.image}
+                            src={post.creator?.image}
                             width={40}
                             height={40}
                             alt="userImage"
@@ -166,10 +166,10 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
                         />
                         <div className="flex flex-col">
                             <h3 className="font-satoshi font-semibold text-gray-900">
-                                {post.creator.username}
+                                {post.creator?.username}
                             </h3>
                             <p className="font-inter text-sm text-gray-500">
-                                {post.creator.email}
+                                {post.creator?.email}
                             </p>
                         </div>
                     </div>
@@ -211,7 +211,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDel }) => {
                     }
                 </div>
                 <div>
-                    {session?.user.id === post.creator._id && pathName === '/profile' && (
+                    {session?.user.id === post.creator?._id && pathName === '/profile' && (
                         <div className="flex gap-4 border-t border-gray-200 pt-3 justify-between">
                             <p className="font-inter text-sm green_gradient cursor-pointer"
                                 onClick={handleEdit}

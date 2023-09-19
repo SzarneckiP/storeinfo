@@ -9,6 +9,7 @@ import { dateCreator } from '../../utils/dateCreator'
 const EditPrompt = () => {
     const searchParams = useSearchParams()
     const promptId = searchParams.get('id')
+    console.log(promptId)
 
     const { data: session } = useSession()
     const router = useRouter()

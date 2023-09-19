@@ -1,17 +1,20 @@
 'use client'
 import { useState, useEffect } from "react"
 import { PromptCard, Loader, Input } from '../components'
-
+import { useSession } from "next-auth/react"
 import { motion } from "framer-motion"
 
 const PromptCardList = ({ data, handleTagClick, getPosts }) => {
+
+    const { data: status } = useSession()
+
+    if (status === 'loading') return <Loader />
 
     return (
         <>
             {!data?.length ? (
                 <div className="flex flex-col items-center gap-3 md:gap-5">
                     <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
-                    <Loader />
                 </div>
             ) : (
                 <div className="my-16 flex flex-wrap gap-6 mb-96"
@@ -22,7 +25,7 @@ const PromptCardList = ({ data, handleTagClick, getPosts }) => {
                             whileInView={{ opacity: 1 }}
                         >{
                                 post.length === 0 ? (
-                                    <Loader />
+                                    <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
                                 )
                                     : (
                                         <PromptCard key={post._id} post={post} handleTagClick={handleTagClick} />
@@ -119,47 +122,39 @@ const Feed = () => {
         setLoading(false)
     }
 
-
-    if (loading) return (
-        <motion.section
-            className="mt-10 flex-col flex-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-        >
-            <Input
-                searchText={searchText}
-                handleSearchChange={handleSearchChange}
-                setSearchText={setSearchText}
-            />
-            <Loader />
-        </motion.section >
-    )
-
     return (
-        <motion.section
-            className="mt-10 flex-col flex-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-        >
-            <button className="outline_btn" onClick={getPosts}>GETPOSTS</button>
-            <Input
-                searchText={searchText}
-                handleSearchChange={handleSearchChange}
-                setSearchText={setSearchText}
-            />
-            {searchText ? (
-                <PromptCardList
-                    data={searchedResults}
-                    handleTagClick={handleTagClick}
+        <>
+            <div className="my-2 text-red-800 flex justify-start items-center ">
+                <p>
+                    Jeśli jest problem z wczytywaniem postów
+                </p>
+                <button className="pointer underline mx-1 flex my-1 justify-start items-start" onClick={getPosts}>kliknij</button>
+            </div>
+
+            <motion.section
+                className="mt-10 flex-col flex-center"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+            >
+                <Input
+                    searchText={searchText}
+                    handleSearchChange={handleSearchChange}
+                    setSearchText={setSearchText}
                 />
-            ) : (
-                <PromptCardList
-                    getPosts={getPosts}
-                    data={posts}
-                    handleTagClick={handleTagClick}
-                />
-            )}
-        </motion.section>
+                {searchText ? (
+                    <PromptCardList
+                        data={searchedResults}
+                        handleTagClick={handleTagClick}
+                    />
+                ) : (
+                    <PromptCardList
+                        getPosts={getPosts}
+                        data={posts}
+                        handleTagClick={handleTagClick}
+                    />
+                )}
+            </motion.section>
+        </>
     )
 }
 

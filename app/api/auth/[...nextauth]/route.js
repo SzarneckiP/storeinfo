@@ -1,56 +1,77 @@
-'use server'
 import NextAuth from "next-auth";
-import GoogleProvider from 'next-auth/providers/google'
 
-import { connectToDB } from "../../../../utils/database";
+import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../../models/user";
-import { cookies } from "next/headers"
+import { connectToDB } from "../../../../utils/database";
+import bcrypt from "bcryptjs";
 
 const handler = NextAuth({
     providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        CredentialsProvider({
+            id: "credentials",
+            name: "Credentials",
+            async authorize(credentials) {
+                //Check if the user exists.
+                await connectToDB();
+
+                try {
+                    const user = await User.findOne({
+                        email: credentials.email,
+                    });
+                    console.log(user)
+
+                    if (user) {
+                        const isPasswordCorrect = await bcrypt.compare(
+                            credentials.password,
+                            user.password
+                        );
+
+                        if (isPasswordCorrect) {
+                            return user;
+                        } else {
+                            throw new Error("Wrong Credentials!");
+                        }
+                    } else {
+                        throw new Error("User not found!");
+                    }
+                } catch (err) {
+                    throw new Error(err);
+                }
+            },
         }),
     ],
-
+    pages: {
+        error: "/",
+    },
     callbacks: {
-        async session({ session }) {
-            const sessionUser = await User.findOne({
-                email: session.user.email,
-            })
+        async jwt({ token, user, session }) {
+            // console.log('jwt callback', { token, user, session })
 
-            session.user.id = sessionUser._id.toString()
-
-            if (!session) {
-                cookies().delete('__Host-next-auth.csrf-token')
-            }
-
-            return session
-        },
-        async signIn({ profile }) {
-            try {
-                await connectToDB()
-
-                const userExists = await User.findOne({
-                    email: profile.email,
-                })
-
-                if (!userExists) {
-                    await User.create({
-                        email: profile.email,
-                        username: profile.name.replace(' ', '_').toLowerCase(),
-                        image: profile.picture,
-                    })
+            if (user) {
+                return {
+                    ...token,
+                    id: user.id,
+                    name: user.username
                 }
-
-                return true
-            } catch (error) {
-                console.log(error)
-                return false
             }
+            return token;
         },
-    }
-})
 
-export { handler as GET, handler as POST }
+        async session({ session, token, user }) {
+            // console.log('session callback', { session, token, user })
+
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id,
+                    username: token.name
+                }
+            }
+            return session;
+        },
+    },
+
+});
+
+export { handler as GET, handler as POST };

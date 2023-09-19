@@ -30,11 +30,7 @@ const Nav = () => {
             }
         })
     }, [])
-    useEffect(() => {
-        if (!session && !providers) {
-            router.push('/')
-        }
-    }, [session, providers])
+
 
     return (
         <motion.nav
@@ -54,7 +50,7 @@ const Nav = () => {
             </Link>
             {/* Desktop Navigation */}
             <div className="sm:flex hidden">
-                {session?.user ? (
+                {session?.user && (
                     <motion.div
                         className="flex gap-3 md:gap-5"
                         initial={{ opacity: 0 }}
@@ -83,52 +79,12 @@ const Nav = () => {
                             />
                         </Link>
                     </motion.div>
-                ) : (
-                    <>
-                        {session?.user ? (
-                            <Loader
-                                width={37}
-                                height={37}
-                                margin={'mt-0'}
-                            />
-                        ) : (
-                            <>
-                                {providers ? (
-                                    Object.values(providers).map((provider) =>
-                                    (
-                                        <button
-                                            type="button"
-                                            key={provider.name}
-                                            onClick={() => signIn(provider.id)}
-                                            className="outline_btn ml-2"
-                                        >
-                                            Zaloguj się
-                                            <Image
-                                                width={15}
-                                                height={15}
-                                                src={`/assets/icons/${provider.id}.png`}
-                                                alt="google"
-                                                style={{ marginLeft: '10px' }}
-                                            />
-                                        </button>
-                                    ))
 
-                                ) : (
-                                    <Loader
-                                        width={37}
-                                        height={37}
-                                        margin={'mt-0'}
-                                    />
-                                )
-                                }
-                            </>
-                        )}
-                    </>
                 )}
             </div>
             {/* Mobile Navigation */}
             <div className="sm:hidden flex relative" ref={ref}>
-                {session?.user ? (
+                {session?.user && (
                     <div className="flex ">
                         <Image
                             src={session?.user.image}
@@ -168,48 +124,6 @@ const Nav = () => {
                             </div>
                         )}
                     </div>
-                ) : (
-                    <>
-                        {session?.user ? (
-                            <Loader
-                                width={37}
-                                height={37}
-                                margin={'mt-0'}
-                            />
-                        ) : (
-
-                            <>
-
-                                {providers ? (
-                                    Object.values(providers).map((provider) => (
-                                        <button
-                                            type="button"
-                                            key={provider.name}
-                                            onClick={() => signIn(provider.id)}
-                                            className="outline_btn"
-                                        >
-                                            Zaloguj Się
-                                            <Image
-                                                width={15}
-                                                height={15}
-                                                src={'/assets/icons/google.png'}
-                                                alt="google"
-                                                style={{ marginLeft: '7px' }}
-                                            />
-                                        </button>
-                                    ))
-                                ) : (
-                                    <Loader
-                                        width={37}
-                                        height={37}
-                                        margin={'mt-0'}
-                                    />
-                                )
-                                }
-                            </>
-                        )
-                        }
-                    </>
                 )}
             </div>
         </motion.nav >

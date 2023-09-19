@@ -8,7 +8,8 @@ const nextConfig = {
         domains: [
             'lh3.googleusercontent.com',
             'platform-lookaside.fbsbx.com',
-            'th.bing.com'
+            'th.bing.com',
+            'source.unsplash.com',
         ],
     },
     webpack(config) {
