@@ -21,18 +21,18 @@ const LoginForm = () => {
         setError(params.get("error"));
     }, [params]);
 
-    console.log('params', params)
-    console.log('error', error)
-
 
     const loginUser = async (e) => {
         e.preventDefault()
         try {
             signIn('credentials', {
                 ...data,
-                redirect: false,
-            })
+                redirect: true,
+            },
+                setError('')
+            )
         } catch (error) {
+            console.log('login error:', error)
             setError(error)
         }
 
@@ -66,11 +66,8 @@ const LoginForm = () => {
                     />
                     <button type='submit' className='py-1.5 px-5 bg-cyan-500 hover:bg-cyan-600  border hover:border-cyan-600 border-cyan-500 rounded-full text-sm font-inter  text-white text-center hover:shadow-sky-500/50 hover:shadow-lg transition'>Zaloguj się</button>
                 </form>
-                <div className='flex justify-end items-end w-full my-5'>
-                    <button onClick={() => router.push('/')} className='outline_btn mr-2'>Wróć</button>
-                </div>
-                <div className='text-red-500'>
-                    {error && 'Coś poszło nie tak... Spróbuj ponownie.'}
+                <div className='text-red-500 mt-5'>
+                    {error && 'Złe hasło lub login...'}
                 </div>
             </div>
         </>

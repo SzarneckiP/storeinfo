@@ -4,7 +4,7 @@ import { PromptCard, Loader, Input } from '../components'
 import { useSession } from "next-auth/react"
 import { motion } from "framer-motion"
 
-const PromptCardList = ({ data, handleTagClick, getPosts }) => {
+const PromptCardList = ({ data, handleTagClick }) => {
 
     const { data: status } = useSession()
 
@@ -100,35 +100,10 @@ const Feed = () => {
         setLoading(false)
     }, [])
 
-    const getPosts = () => {
-        setLoading(true)
-        const fetchPosts = async () => {
-            const response = await fetch('/api/prompt', {
-                method: 'GET',
-                headers: {
-                    'Cache-Control': 'public, s-maxage=1',
-                    'CDN-Cache-Control': 'public, s-maxage=60',
-                    'Vercel-CDN-Cache-Control': 'public, s-maxage=3600'
-                },
-                next: { revalidate: 60 },
-            })
-            const data = await response.json()
-            setPosts(data)
-        }
-
-        fetchPosts()
-        setLoading(false)
-    }
+    if (loading) return <Loader />
 
     return (
         <>
-            <div className="my-2 text-red-800 flex justify-start items-center ">
-                <p>
-                    Jeśli jest problem z wczytywaniem postów
-                </p>
-                <button className="pointer underline mx-1 flex my-1 justify-start items-start" onClick={getPosts}>kliknij</button>
-            </div>
-
             <motion.section
                 className="mt-10 flex-col flex-center"
                 initial={{ opacity: 0 }}
@@ -146,7 +121,6 @@ const Feed = () => {
                     />
                 ) : (
                     <PromptCardList
-                        getPosts={getPosts}
                         data={posts}
                         handleTagClick={handleTagClick}
                     />
