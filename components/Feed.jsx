@@ -86,11 +86,9 @@ const Feed = () => {
             const response = await fetch('/api/prompt', {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Cache-Control': 'no-cache',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                    'Cache-Control': 'public, s-maxage=1',
+                    'CDN-Cache-Control': 'public, s-maxage=60',
+                    'Vercel-CDN-Cache-Control': 'public, s-maxage=3600'
                 },
                 next: { revalidate: 60 },
             })
@@ -100,7 +98,7 @@ const Feed = () => {
 
         fetchPosts()
         setLoading(false)
-    }, [data])
+    }, [])
 
     const getPosts = () => {
         setLoading(true)
@@ -108,11 +106,9 @@ const Feed = () => {
             const response = await fetch('/api/prompt', {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Cache-Control': 'no-cache',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                    'Cache-Control': 'public, s-maxage=1',
+                    'CDN-Cache-Control': 'public, s-maxage=60',
+                    'Vercel-CDN-Cache-Control': 'public, s-maxage=3600'
                 },
                 next: { revalidate: 60 },
             })
