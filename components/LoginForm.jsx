@@ -43,7 +43,7 @@ const LoginForm = () => {
             <div className='flex items-center justify-center w-full'>
                 <p className="logo_text my-5 text-5xl flex items-center justify-center">Zaloguj <span className="blue_gradient ml-2"> się</span></p>
             </div>
-            <div className='flex items-center justify-center my-5 flex-col w-[500px]'>
+            <div className='flex items-center justify-center my-5 flex-col w-[300px] md:w-[500px]'>
                 <form
                     className='flex flex-col gap-3 w-full'
                     onSubmit={loginUser}

@@ -32,7 +32,7 @@ const Register = () => {
                 })
             })
 
-            res.status === 201 || 200 && router.push('/success')
+            if (res.status === 201 || 200) router.push('/success')
 
         } catch (err) {
             setErr(true)

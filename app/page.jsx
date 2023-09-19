@@ -11,7 +11,7 @@ const Home = () => {
 
     return (
         <motion.section
-            className="w-full flex flex-col"
+            className="w-auto md:w-full flex flex-col"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
         >
