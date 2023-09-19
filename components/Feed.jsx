@@ -100,7 +100,7 @@ const Feed = () => {
 
         fetchPosts()
         setLoading(false)
-    }, [])
+    }, [data])
 
     const getPosts = () => {
         setLoading(true)
