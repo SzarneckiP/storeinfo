@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react"
 import { motion } from "framer-motion"
 import axios from "axios"
 
-const PromptCardList = ({ data, handleTagClick }) => {
+const PromptCardList = ({ data, handleTagClick, loading }) => {
 
     const { data: status } = useSession()
 
@@ -13,24 +13,25 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
     return (
         <>
-            {!data?.length ? (
+            {loading ? (
                 <div className="flex flex-col items-center gap-3 md:gap-5">
-                    <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
+                    <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient"><Loader /></h2>
                 </div>
             ) : (
-                <div className="my-16 flex flex-wrap gap-6 mb-96"
-                >
+                <div className="my-16 flex flex-wrap gap-6 mb-96">
                     {data.map((post) => (
                         <motion.div
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                         >{
-                                post.length === 0 ? (
-                                    <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
+                                post ? (
+                                    <PromptCard key={post._id} post={post} handleTagClick={handleTagClick} />
+
+                                ) : (
+                                    <div>
+                                        <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
+                                    </div>
                                 )
-                                    : (
-                                        <PromptCard key={post._id} post={post} handleTagClick={handleTagClick} />
-                                    )
                             }
                         </motion.div>
                     ))}
@@ -81,45 +82,43 @@ const Feed = () => {
         setLoading(false)
     };
 
-    // useEffect(() => {
-    //     setLoading(true)
-    //     const fetchPosts = async () => {
-    //         const response = await fetch('/api/prompt', {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Cache-Control': 'public, s-maxage=1',
-    //                 'CDN-Cache-Control': 'public, s-maxage=60',
-    //                 'Vercel-CDN-Cache-Control': 'public, s-maxage=3600'
-    //             },
-    //             next: { revalidate: 60 },
-    //         })
-    //         const data = await response.json()
-    //         setPosts(data)
-    //     }
-
-    //     fetchPosts()
-    //     setLoading(false)
-    // }, [])
-
-
     useEffect(() => {
-
         axios.get('/api/prompt')
+
             .then(function (response) {
                 setLoading(true)
                 const data = response.data
                 setPosts(data)
-                setLoading(false)
+
             })
             .catch(function (error) {
                 // handle error
                 console.log(error);
             })
-    }
+            .finally(() => {
+                setLoading(false)
+            })
+    }, [])
 
-        , [])
+    if (posts.length === 0) return (
+        <div>
+            <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
+        </div>)
 
-    if (loading) return <div className=" flex justify-center items-center"><Loader /></div>
+    if (searchedResults.length === 0 && searchText) return (
+        <motion.section
+            className="mt-10 flex-col flex-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+        >
+            <Input
+                searchText={searchText}
+                handleSearchChange={handleSearchChange}
+                setSearchText={setSearchText}
+            />
+            <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
+        </motion.section>
+    )
 
     return (
         <>
@@ -134,12 +133,16 @@ const Feed = () => {
                     setSearchText={setSearchText}
                 />
                 {searchText ? (
-                    <PromptCardList
-                        data={searchedResults}
-                        handleTagClick={handleTagClick}
-                    />
+                    <>
+                        <PromptCardList
+                            loading={loading}
+                            data={searchedResults}
+                            handleTagClick={handleTagClick}
+                        />
+                    </>
                 ) : (
                     <PromptCardList
+                        loading={loading}
                         data={posts}
                         handleTagClick={handleTagClick}
                     />

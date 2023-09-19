@@ -25,6 +25,7 @@ const nextConfig = {
             'platform-lookaside.fbsbx.com',
             'th.bing.com',
             'source.unsplash.com',
+            'images.unsplash.com',
         ],
     },
     webpack(config) {
