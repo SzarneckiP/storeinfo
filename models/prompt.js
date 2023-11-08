@@ -22,7 +22,10 @@ const PromptSchema = new Schema({
     realized: {
         type: Boolean,
         required: true,
-    }
+    },
+    realizedDate: {
+        type: String,
+    },
 })
 
 const Prompt = models.Prompt || model('Prompt', PromptSchema)

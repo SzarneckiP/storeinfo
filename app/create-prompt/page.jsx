@@ -17,6 +17,7 @@ const CreatePrompt = () => {
         createdOn: '',
         edited: '',
         realized: false,
+        realizedDate: '',
     })
 
     const createPrompt = async (e) => {
@@ -41,6 +42,7 @@ const CreatePrompt = () => {
                     createdOn: dateCreator(),
                     edited: dateCreator(),
                     realized: post.realized,
+                    realizedDate: post.realizedDate,
                 })
             })
 

@@ -2,7 +2,7 @@ import Prompt from "../../../models/prompt";
 import { connectToDB } from "../../../utils/database";
 
 export const PATCH = async (req, { params }) => {
-    const { id, prompt, tag, edited, createdOn, realized } = await req.json()
+    const { id, prompt, tag, edited, createdOn, realized, realizedDate } = await req.json()
 
     try {
         await connectToDB()
@@ -17,6 +17,7 @@ export const PATCH = async (req, { params }) => {
         existingPrompt.createdOn = createdOn
         existingPrompt.edited = edited
         existingPrompt.realized = realized
+        existingPrompt.realizedDate = realizedDate
 
         await existingPrompt.save()
 

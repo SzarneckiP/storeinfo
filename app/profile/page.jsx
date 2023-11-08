@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 
 import Profile from '../../components/Profile'
-import { Loader } from "../../components"
+import { Loader, Modal } from "../../components"
 
 const MyProfile = () => {
 
@@ -70,8 +70,6 @@ const MyProfile = () => {
                 </motion.div>
             )}
         </div>
-
-
     )
 }
 

@@ -24,12 +24,12 @@ const PromptCardList = ({ data, handleTagClick, loading }) => {
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                         >{
-                                post ? (
+                                post && post ? (
                                     <PromptCard key={post._id} post={post} handleTagClick={handleTagClick} />
-
                                 ) : (
                                     <div>
                                         <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
+                                        <Loader />
                                     </div>
                                 )
                             }
@@ -68,9 +68,9 @@ const Feed = () => {
             setTimeout(() => {
                 const searchResult = filterPrompts(e.target.value);
                 setSearchedResults(searchResult);
-                setLoading(false)
             }, 500)
         );
+        setLoading(false)
     }
 
     const handleTagClick = (tagName) => {
@@ -83,8 +83,8 @@ const Feed = () => {
     };
 
     useEffect(() => {
+        setLoading(true)
         axios.get('/api/prompt')
-
             .then(function (response) {
                 setLoading(true)
                 const data = response.data
@@ -92,18 +92,27 @@ const Feed = () => {
 
             })
             .catch(function (error) {
-                // handle error
                 console.log(error);
             })
             .finally(() => {
                 setLoading(false)
             })
+        setLoading(false)
     }, [])
 
-    if (posts.length === 0) return (
-        <div>
-            <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
-        </div>)
+    if (loading && !posts) {
+        return (
+            <div>
+                <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
+                <div className=" flex items-center justify-center"><Loader /></div>
+            </div>)
+    } else if (!posts) {
+        return (
+            <div>
+                <h2 className="mt-10 pt-10 text-center text-5xl blue_gradient">Brak wpisów...</h2>
+            </div>)
+    }
+
 
     if (searchedResults.length === 0 && searchText) return (
         <motion.section
