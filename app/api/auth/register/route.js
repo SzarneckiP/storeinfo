@@ -21,6 +21,6 @@ export const POST = async (req) => {
             status: 201,
         })
     } catch (error) {
-        return new Response("Failed to fetch...", { status: 500 })
+        return new Response(`Failed to fetch... ${error}`, { status: 500 })
     }
 }
