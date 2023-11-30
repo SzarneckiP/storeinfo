@@ -28,6 +28,7 @@ const LoginForm = () => {
             signIn('credentials', {
                 ...data,
                 redirect: true,
+                callbackUrl: '/',
             },
                 setError(''),
                 router.push('/'),
