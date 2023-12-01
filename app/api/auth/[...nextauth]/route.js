@@ -6,6 +6,10 @@ import { connectToDB } from "../../../../utils/database";
 import bcrypt from "bcryptjs";
 
 const handler = NextAuth({
+    session: {
+        strategy: 'jwt',
+        maxAge: '3000',
+    },
     providers: [
         CredentialsProvider({
             id: "credentials",
@@ -39,7 +43,7 @@ const handler = NextAuth({
             },
         }),
     ],
-    secret: `${process.env.NEXTAUTH_SECRET}`,
+    secret: process.env.NEXTAUTH_SECRET,
     pages: {
         error: "/",
     },
