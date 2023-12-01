@@ -84,13 +84,7 @@ const Feed = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get('/api/prompt', {
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache',
-                'Expires': '0',
-            },
-        })
+        axios.get('/api/prompt')
             .then(function (response) {
                 setLoading(true)
                 const data = response.data
