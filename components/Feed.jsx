@@ -92,7 +92,6 @@ const Feed = () => {
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
             },
-            next: { revalidate: 60 }
         })
             .then(function (response) {
                 setLoading(true)
