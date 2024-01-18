@@ -86,12 +86,11 @@ const Feed = () => {
         setLoading(true)
         axios.get('/api/prompt', {
             headers: {
-                'Content-Type': 'application/json',
-                'Cache-Control': 'no-cache',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                'Cache-Control': 'public, s-maxage=1',
+                'CDN-Cache-Control': 'public, s-maxage=60',
+                'Vercel-CDN-Cache-Control': 'public, s-maxage=3600'
             },
+            next: { revalidate: 60 },
         })
             .then(function (response) {
                 setLoading(true)
