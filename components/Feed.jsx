@@ -84,7 +84,16 @@ const Feed = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.get('/api/prompt')
+        axios.get('/api/prompt', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            },
+            next: { revalidate: 60 }
+        })
             .then(function (response) {
                 setLoading(true)
                 const data = response.data
