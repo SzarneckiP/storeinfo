@@ -105,7 +105,7 @@ const Feed = () => {
                 setLoading(false)
             })
         setLoading(false)
-    }, [])
+    }, [data])
 
     if (loading && !posts) {
         return (
