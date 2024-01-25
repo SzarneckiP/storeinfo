@@ -83,29 +83,29 @@ const Feed = () => {
     };
 
     useEffect(() => {
-        setLoading(true)
-        axios.get('/api/prompt', {
-            headers: {
-                'Cache-Control': 'public, s-maxage=1',
-                'CDN-Cache-Control': 'public, s-maxage=60',
-                'Vercel-CDN-Cache-Control': 'public, s-maxage=3600'
-            },
-            next: { revalidate: 60 },
-        })
-            .then(function (response) {
+        const getPosts = async () => {
+
+            try {
                 setLoading(true)
+                const response = await axios.get('/api/prompt', {
+                    headers: {
+                        'Cache-Control': 'public, s-maxage=1',
+                        'CDN-Cache-Control': 'public, s-maxage=60',
+                        'Vercel-CDN-Cache-Control': 'public, s-maxage=3600'
+                    },
+                    next: { revalidate: 60 },
+                })
+
                 const data = response.data
                 setPosts(data)
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .finally(() => {
                 setLoading(false)
-            })
-        setLoading(false)
-    }, [data])
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getPosts()
+    }, [])
 
     if (loading && !posts) {
         return (
